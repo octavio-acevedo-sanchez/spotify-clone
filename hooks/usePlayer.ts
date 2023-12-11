@@ -18,7 +18,7 @@ const usePlayer = create<PlayerStore>(set => ({
 		set({ ids });
 	},
 	reset: () => {
-		set({ ids: [] });
+		set({ ids: [], activeId: undefined });
 	}
 }));
 

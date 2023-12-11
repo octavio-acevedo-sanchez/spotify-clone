@@ -18,7 +18,7 @@ export const postData = async ({
 }: {
 	url: string;
 	data?: { price: Price };
-}): Promise<Response> => {
+}): Promise<any> => {
 	console.log('POST REQUEST:', url, data);
 
 	const res: Response = await fetch(url, {

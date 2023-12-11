@@ -4,6 +4,7 @@ import Button from './Button';
 
 import useAuthModal from '@/hooks/useAuthModal';
 import { useUser } from '@/hooks/useUser';
+import usePlayer from '@/hooks/usePlayer';
 
 import { useRouter } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
@@ -20,6 +21,7 @@ interface HeaderProps {
 }
 
 const Header = ({ children, className }: HeaderProps): React.ReactNode => {
+	const player = usePlayer();
 	const authModal = useAuthModal();
 	const router = useRouter();
 
@@ -28,7 +30,7 @@ const Header = ({ children, className }: HeaderProps): React.ReactNode => {
 
 	const handleLogout = async (): Promise<void> => {
 		const { error } = await supabaseClient.auth.signOut();
-		// Reser any playing songs
+		player.reset();
 		router.refresh();
 
 		if (error) {

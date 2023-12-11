@@ -8,24 +8,30 @@ import MediaItem from './MediaItem';
 import { TbPlaylist } from 'react-icons/tb';
 import { AiOutlinePlus } from 'react-icons/ai';
 import useOnPlay from '@/hooks/useOnPlay';
+import useSubscribeModal from '@/hooks/useSubscribeModal';
 
 interface LibraryProps {
 	songs: Song[];
 }
 
 const Library = ({ songs }: LibraryProps): React.ReactNode => {
+	const subscribeModal = useSubscribeModal();
 	const authModal = useAuthModal();
 	const uploadModal = useUploadModal();
-	const { user } = useUser();
+	const { user, subscription } = useUser();
 	const onPlay = useOnPlay(songs);
 
 	const onClick = (): void => {
 		if (!user) {
 			authModal.onOpen();
+
 			return;
 		}
 
-		// TODO: Check for subscription
+		if (!subscription) {
+			subscribeModal.onOpen();
+			return;
+		}
 
 		uploadModal.onOpen();
 	};
